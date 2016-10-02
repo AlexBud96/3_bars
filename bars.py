@@ -12,7 +12,7 @@ def load_data(filepath):
     return data
     
 def print_bar(bar_name, how_big):
-     if not how_big:
+     if how_big is None:
             print ('Заведение %s находится на кратчайшем расстоянии от вас' % (bar_name))
      else:
             print ('В заведении %s имеется %d свободных мест' % (bar_name, how_big))
@@ -29,8 +29,8 @@ def get_big_and_small_bars(data):
         if smallest > bar['Cells']['SeatsCount']:
             smallest = bar['Cells']['SeatsCount']
             bar_name2 = bar['Cells']['Name']
-    print_bar(bar_name1, biggest)
-    print_bar(bar_name2, smallest)
+    Bars = [bar_name1, biggest, bar_name2, smallest]
+    return Bars
 
 def length_of_path(coordinates, longitude, latitude):
     length = math.sqrt((int(coordinates[0]) ** 2 - int(longitude) ** 2) + (int(coordinates[1]) ** 2 - int(latitude) ** 2))
@@ -49,7 +49,9 @@ def get_closest_bar(data, longitude, latitude):
 
 if __name__ == '__main__':
     data_dir = input('Укажите путь до файла: ')
-    get_big_and_small_bars(load_data(data_dir))
+    Bars = get_big_and_small_bars(load_data(data_dir))
+    print_bar(Bars[0], Bars[1])
+    print_bar(Bars[2], Bars[3])
     longitude = input('Широта: ')
     latitude = input('Долгота: ')
     get_closest_bar(load_data(data_dir), longitude, latitude)
