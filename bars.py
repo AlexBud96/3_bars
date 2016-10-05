@@ -18,19 +18,19 @@ def print_bar(bar_name, how_big):
             print ('В заведении %s имеется %d свободных мест' % (bar_name, how_big))
 
 def get_big_and_small_bars(data):
-    bar_name1 = data[1]['Cells']['Name']
-    bar_name2 = data[1]['Cells']['Name']
-    biggest = data[1]['Cells']['SeatsCount']
-    smallest = data[1]['Cells']['SeatsCount']
+    big_bar_name = data[1]['Cells']['Name']
+    small_bar_name = data[1]['Cells']['Name']
+    big_bar_seats = data[1]['Cells']['SeatsCount']
+    small_bar_seats = data[1]['Cells']['SeatsCount']
     for bar in data:
-        if biggest < bar['Cells']['SeatsCount']:
-            biggest = bar['Cells']['SeatsCount']
-            bar_name1 = bar['Cells']['Name']
-        if smallest > bar['Cells']['SeatsCount']:
-            smallest = bar['Cells']['SeatsCount']
-            bar_name2 = bar['Cells']['Name']
-    Bars = [bar_name1, biggest, bar_name2, smallest]
-    return Bars
+        if big_bar_seats < bar['Cells']['Seats33Count']:
+            big_bar_seats = bar['Cells']['SeatsCount']
+            big_bar_name = bar['Cells']['Name']
+        if small_bar_seats > bar['Cells']['SeatsCount']:
+            small_bar_seats = bar['Cells']['SeatsCount']
+            small_bar_name = bar['Cells']['Name']
+    bars = [big_bar_name, big_bar_seats, small_bar_name, small_bar_seats]
+    return bars
 
 def length_of_path(coordinates, longitude, latitude):
     length = math.sqrt((int(coordinates[0]) ** 2 - int(longitude) ** 2) + (int(coordinates[1]) ** 2 - int(latitude) ** 2))
@@ -49,9 +49,9 @@ def get_closest_bar(data, longitude, latitude):
 
 if __name__ == '__main__':
     data_dir = input('Укажите путь до файла: ')
-    Bars = get_big_and_small_bars(load_data(data_dir))
-    print_bar(Bars[0], Bars[1])
-    print_bar(Bars[2], Bars[3])
+    bars = get_big_and_small_bars(load_data(data_dir))
+    print_bar(bars[0], bars[1])
+    print_bar(bars[2], bars[3])
     longitude = input('Широта: ')
     latitude = input('Долгота: ')
     get_closest_bar(load_data(data_dir), longitude, latitude)
